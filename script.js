@@ -10,51 +10,55 @@ const WHATSAPP_NUMBER = "2348164620704";
 // ============================================================
 const UNIT_PRICE = 9900;
 
-const qtyInput = document.getElementById('qty');
-const totalAmtEl = document.getElementById('totalAmt');
-const stickyPriceEl = document.getElementById('stickyPrice');
-const orderBtn = document.getElementById('orderBtn');
+document.addEventListener('DOMContentLoaded', function () {
 
-function formatNaira(value) {
-  const num = Number(value);
-  if (Number.isNaN(num)) return `₦${value}`;
-  return `₦${num.toLocaleString()}`;
-}
+  const qtyInput = document.getElementById('qty');
+  const totalAmtEl = document.getElementById('totalAmt');
+  const stickyPriceEl = document.getElementById('stickyPrice');
+  const orderBtn = document.getElementById('orderBtn');
 
-function updateTotal() {
-  let qty = parseInt(qtyInput.value, 10);
-  if (Number.isNaN(qty) || qty < 1) qty = 1;
-  const total = UNIT_PRICE * qty;
-  const formatted = formatNaira(total);
-  totalAmtEl.textContent = formatted;
-  stickyPriceEl.textContent = formatted;
-}
-
-function sendOrder() {
-  let qty = parseInt(qtyInput.value, 10);
-  if (Number.isNaN(qty) || qty < 1) qty = 1;
-
-  const name = document.getElementById('name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const address = document.getElementById('address').value.trim();
-
-  if (!name || !phone || !address) {
-    alert("Please fill in your name, phone number, and address before ordering.");
-    return;
+  function formatNaira(value) {
+    const num = Number(value);
+    if (Number.isNaN(num)) return `₦${value}`;
+    return `₦${num.toLocaleString()}`;
   }
 
-  const message =
-    `Hello, I want to order CloudNest™ Baby Support Pillow.
+  function updateTotal() {
+    let qty = parseInt(qtyInput.value, 10);
+    if (Number.isNaN(qty) || qty < 1) qty = 1;
+    const total = UNIT_PRICE * qty;
+    const formatted = formatNaira(total);
+    totalAmtEl.textContent = formatted;
+    stickyPriceEl.textContent = formatted;
+  }
+
+  function sendOrder() {
+    let qty = parseInt(qtyInput.value, 10);
+    if (Number.isNaN(qty) || qty < 1) qty = 1;
+
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+
+    if (!name || !phone || !address) {
+      alert("Please fill in your name, phone number, and address before ordering.");
+      return;
+    }
+
+    const message =
+      `Hello, I want to order CloudNest™ Baby Support Pillow.
 Quantity: ${qty}
 Address: ${address}
 WhatsApp phone number: ${phone}
 Name: ${name}`;
 
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
-}
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  }
 
-qtyInput.addEventListener('input', updateTotal);
-orderBtn.addEventListener('click', sendOrder);
+  qtyInput.addEventListener('input', updateTotal);
+  orderBtn.addEventListener('click', sendOrder);
 
-updateTotal();
+  updateTotal();
+
+});
